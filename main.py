@@ -11,17 +11,17 @@ def notify(title, text):
   subprocess.call(['osascript', '-e', CMD, title, text]) # osascript ile macosx için bildirim olayı tetiklenmektedir.
 def getdata(url):
     r = requests.get(url)  # get request sorgusu ile web sitesinden sayfa bilgisi alınmaktadır.
-    return r.text
+    return r.text # web sitesi sayfa içeriği string formatında geri döndürülür.
 while True: # Sonsuz döngü açılmıştır.
-    htmldata = getdata("https://weather.com/en-IN/weather/today/l/a6ae974ab6d54e31d092094d11d3e04d41a1f81adefe6a49a939c2c1c4bf2696") #weather.com sitesi istanbul 07.09.2023 tarihli hava durumu bilgisine erişim linkidir. Bağlantı zaman içinde değişebilir güncellenmesi önerilir.
-    soup = BeautifulSoup(htmldata, 'html.parser') #HTML yanıtını düzeneleyen hazır bir kütüphane fonksiyonudur.
+    htmldata = getdata("https://weather.com/en-IN/weather/today/l/a6ae974ab6d54e31d092094d11d3e04d41a1f81adefe6a49a939c2c1c4bf2696") # weather.com sitesi istanbul 07.09.2023 tarihli hava durumu bilgisine erişim linkidir. Bağlantı zaman içinde değişebilir güncellenmesi önerilir.
+    soup = BeautifulSoup(htmldata, 'html.parser') # HTML yanıtını düzeneleyen hazır bir kütüphane fonksiyonudur.
     current_temp = soup.find_all("span",
                                  class_="CurrentConditions--tempValue--MHmYY") # weather.com sitesi span elemanları içerisinden özel bir sınıfı bulup sınıfından devamındaki sıcaklık bilgisi alınması için kullanılmaktaıdr.
     chances_rain = soup.find_all("div",
                                  class_="CurrentConditions--phraseValue--mZC_p") # weather.com sitesi div elemanları içerisinden özel bir sınıfı bulup sınıfından devamındaki hava olayı bilgisi alınması için kullanılmaktaıdr.
-    weat_temp = str(current_temp).split(">")[1].split("<")[0] # Sıcaklık bilgisi split fonsiyonu ile ayrıklaştırılmaktadır.
-    weat_cond = str(chances_rain).split(">")[1].split("<")[0] # Hava olalyı bilgisi split fonsiyonu ile ayrıklaştırılmaktadır.
-    result = "Sıcaklık " + weat_temp + " ve " + weat_cond # mesaj bütünleştirilmektedir.
+    weat_temp = str(current_temp).split(">")[1].split("<")[0] # Sıcaklık bilgisi split fonksiyonu ile ayrıklaştırılmaktadır.
+    weat_cond = str(chances_rain).split(">")[1].split("<")[0] # Hava olayı bilgisi split fonksiyonu ile ayrıklaştırılmaktadır.
+    result = "Sıcaklık " + weat_temp + " ve " + weat_cond # Mesaj bütünleştirilmektedir.
     #print(result)
     notify("Hava Durumu İstanbul", result) # MacOSX bildirimi için çağırılan fonksiyondur.
     sleep(300) # 5 dakika bekleme yapılması için sleep fonksiyonu çağırılmaktadır.
