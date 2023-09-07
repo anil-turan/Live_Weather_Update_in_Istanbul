@@ -14,7 +14,7 @@ def getdata(url):
     return r.text
 while True: # Sonsuz döngü açılmıştır.
     htmldata = getdata("https://weather.com/en-IN/weather/today/l/a6ae974ab6d54e31d092094d11d3e04d41a1f81adefe6a49a939c2c1c4bf2696") #weather.com sitesi istanbul 07.09.2023 tarihli hava durumu bilgisine erişim linkidir. Bağlantı zaman içinde değişebilir güncellenmesi önerilir.
-    soup = BeautifulSoup(htmldata, 'html.parser' #HTML yanıtını düzeneleyen hazır bir kütüphane fonksiyonudur.
+    soup = BeautifulSoup(htmldata, 'html.parser') #HTML yanıtını düzeneleyen hazır bir kütüphane fonksiyonudur.
     current_temp = soup.find_all("span",
                                  class_="CurrentConditions--tempValue--MHmYY") # weather.com sitesi span elemanları içerisinden özel bir sınıfı bulup sınıfından devamındaki sıcaklık bilgisi alınması için kullanılmaktaıdr.
     chances_rain = soup.find_all("div",
